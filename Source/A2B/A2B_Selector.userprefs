@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Properties\AssemblyInfo.cs">
     <Files>
-      <File FileName="Utilities\A2BSelectorData.cs" Line="6" Column="15" />
+      <File FileName="Utilities\A2BSelectorData.cs" Line="1" Column="1" />
       <File FileName="Utilities\A2BSelectorResearch.cs" Line="1" Column="1" />
       <File FileName="Components\BeltSelectorAddon.cs" Line="1" Column="1" />
-      <File FileName="Properties\AssemblyInfo.cs" Line="39" Column="39" />
+      <File FileName="Properties\AssemblyInfo.cs" Line="38" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
