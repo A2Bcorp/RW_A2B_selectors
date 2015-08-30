@@ -18,7 +18,7 @@
 		<defName>A2BSelector</defName>
 		
 		<!-- Required Core version -->
-		<RequiredVersion>0.11.3</RequiredVersion>
+		<RequiredVersion>0.12.0</RequiredVersion>
 		
 	</A2BSelectorDataDef>
 
