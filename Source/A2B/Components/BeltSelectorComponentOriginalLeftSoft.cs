@@ -5,29 +5,15 @@ using A2B;
 
 namespace A2B_Selector
 {
-	public class Original_Left_Soft : BeltSelectorAddon
+    
+	public class Original_Left_Soft : Soft
     {
-		public override bool CanAcceptFrom(Rot4 direction)
-		{
-			return ( direction == Rot4.South )||( direction == Rot4.East );
-		}
-
-        public override IntVec3 GetDestinationForThing(Thing thing)
+        
+        public override void GetIOVectors()
         {
-            // Test the 'selection' idea ...
-            ISlotGroupParent slotParent = parent as ISlotGroupParent;
-            if (slotParent == null)
-            {
-                throw new InvalidOperationException("parent is not a SlotGroupParent!");
-            }
-            
-			// Send north
-            var selectionSettings = slotParent.GetStoreSettings();
-			if( ( selectionSettings.AllowedToAccept(thing) )&&( IsFreeBelt(this.GetPositionFromRelativeRotation(Rot4.West)) ) )
-                return this.GetPositionFromRelativeRotation(Rot4.West);
-
-            // else, send east
-			return this.GetPositionFromRelativeRotation(Rot4.North);
+            inputVectors = new Rot4[]{ Rot4.South, Rot4.East };
+            outputOneVectors = new Rot4[]{ Rot4.West };
+            outputTwoVectors = new Rot4[]{ Rot4.North };
         }
 
     }

@@ -5,59 +5,38 @@ using A2B;
 
 namespace A2B_Selector
 {
+    
 	public class Soft : BeltSelectorAddon
     {
+        
         public override IntVec3 GetDestinationForThing(Thing thing)
         {
             // Test the 'selection' idea ...
-            ISlotGroupParent slotParent = parent as ISlotGroupParent;
-            if (slotParent == null)
+            if( slotParent == null )
             {
                 throw new InvalidOperationException("parent is not a SlotGroupParent!");
             }
-            
+
+            IntVec3 destination;
+
+            // Matches filter?
             var selectionSettings = slotParent.GetStoreSettings();
-			if( ( selectionSettings.AllowedToAccept(thing) )&&( IsFreeBelt(this.GetPositionFromRelativeRotation(Rot4.North)) ) )
-                return this.GetPositionFromRelativeRotation(Rot4.North);
-
-            // A list of destinations - indexing modulo 2 lets us cycle them and avoid
-            // long chains of if-statements.
-            IntVec3[] dests = {
-                this.GetPositionFromRelativeRotation(Rot4.West),
-                this.GetPositionFromRelativeRotation(Rot4.East)
-            };
-
-            // Determine where we are going in the destination list (and default to left)
-            int index = Math.Max(0, Array.FindIndex(dests, dir => (dir == _splitterDest)));
-
-            // Do we have a new item ?
-            if (_mythingID == thing.ThingID && IsFreeBelt(_splitterDest))
+            if( selectionSettings.AllowedToAccept( thing ) )
             {
-                return _splitterDest;
-            }
-            else
-            {
-                _mythingID = thing.ThingID;
-
-                // Try the next destination
-                index = (index + 1) % 2;
-                if (IsFreeBelt(dests[index]))
+                // Send it to the next "1" output
+                destination = GetOutputVector( thing, outputOnePos, _lastOnePosition, allowOutputOneToGround );
+                if( destination != IntVec3.Invalid )
                 {
-                    _splitterDest = dests[index];
-                    return _splitterDest;
+                    _lastOnePosition = destination;
+                    return _lastOnePosition;
                 }
-
-                // Try the one after that
-                index = (index + 1) % 2;
-                if (IsFreeBelt(dests[index]))
-                {
-                    _splitterDest = dests[index];
-                    return _splitterDest;
-                }
-
-                // Give up and use our current destination
-                return _splitterDest;
             }
+
+            // Doesn't match, send it to the next "2" output
+            destination = GetOutputVector( thing, outputTwoPos, _lastTwoPosition, allowOutputTwoToGround );
+            if( destination != IntVec3.Invalid )
+                _lastTwoPosition = destination;
+            return _lastTwoPosition;
         }
 
 	}
